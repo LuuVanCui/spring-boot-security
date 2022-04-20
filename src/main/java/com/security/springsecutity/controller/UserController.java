@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.security.springsecutity.model.Role;
 import com.security.springsecutity.model.User;
 import com.security.springsecutity.service.UserService;
-import com.security.springsecutity.ultilities.ResponseObject;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -41,7 +41,6 @@ public class UserController {
     @PostMapping("/user/save")
     ResponseEntity<User> saveUser(@RequestBody User user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        ResponseObject responseObject = new ResponseObject();
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 

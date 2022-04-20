@@ -5,7 +5,10 @@ import com.security.springsecutity.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -15,7 +18,7 @@ public class ProductController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getAllProducts(ModelMap modelMap) {
-        Iterable<Product> products = productService.getAllProducts();
+        List<Product> products = productService.getAllProducts();
         modelMap.addAttribute("products", products);
         return "index";
     }
@@ -28,8 +31,17 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateProduct(@ModelAttribute Product product, ModelMap modelMap) {
+    public String updateProduct(@ModelAttribute Product product, ModelMap modelMap, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+        }
         productService.updateProduct(product);
-        return getAllProducts(modelMap);
+        return "redirect:/products";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String deleteProductById(ModelMap modelMap, @PathVariable Long id) {
+        productService.deleteProductById(id);
+        return "redirect:/products";
     }
 }

@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepo productRepo;
 
     @Override
-    public Iterable<Product> getAllProducts() {
+    public List<Product> getAllProducts() {
         log.info("Fetching all products");
         return productRepo.findAll();
     }

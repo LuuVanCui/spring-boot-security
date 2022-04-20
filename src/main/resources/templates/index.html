@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>All Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Products</title>
+    <style>
+        i {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -64,7 +70,29 @@
                         <td th:text="${product.description}" />
                         <td th:text="${product.prize}" />
                         <td th:text="${product.url}" />
-                        <td>View details</td>
+                        <td>
+                            <i type="button" class="fa fa-trash" style="color: red;" data-bs-toggle="modal" th:data-bs-target="|#userModal${product.id}|"></i>
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="|userModal${product.id}|" tabindex="-1" aria-labelledby="delete-productLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="delete-productLabel">Delete Products</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        Are you sure to delete <strong th:text="${product.productName}"></strong>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <form method="POST" th:action="@{'/products/delete/{id}'(id=${product.id})}">
+                                            <button type="submit" class="btn btn-danger">Force Delete</button>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>                        
                     </tr>
                 </tbody>
           
