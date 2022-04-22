@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,16 @@ public class SpringSecutityApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringSecutityApplication.class, args);
+	}
+
+	@Bean
+	public CommonsRequestLoggingFilter requestLoggingFilter() {
+		CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+		loggingFilter.setIncludeClientInfo(true);
+		loggingFilter.setIncludeQueryString(true);
+		loggingFilter.setIncludePayload(true);
+		loggingFilter.setMaxPayloadLength(64000);
+		return loggingFilter;
 	}
 
 	@Bean

@@ -33,6 +33,11 @@ public class ProductController {
     private final ProductService productService;
     private final UserService userService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String getHomePage() {
+        return "redirect:/products";
+    }
+
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String getAllProducts(HttpServletRequest request, ModelMap modelMap) {
         AtomicBoolean isAuthorized = new AtomicBoolean(false);
