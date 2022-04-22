@@ -33,9 +33,10 @@ public class ProductServiceImpl implements ProductService {
     public boolean updateProduct(Product newProduct) {
         Optional<Product> existProduct = productRepo.findById(newProduct.getId());
         if (existProduct.isEmpty()) {
+            log.error("Product {} is exist in the database", existProduct.get().getProductName());
             return false;
         } else {
-            log.error(existProduct.get().toString());
+            log.error("Updating product {} to {}", existProduct.get(), newProduct);
             productRepo.save(newProduct);
             return true;
         }
@@ -45,8 +46,10 @@ public class ProductServiceImpl implements ProductService {
     public boolean deleteProductById(Long productId) {
         Optional<Product> existProduct = productRepo.findById(productId);
         if (existProduct.isEmpty()) {
+            log.error("Product id {} is invalid", productId);
             return false;
         } else {
+            log.info("Deleting product {}", existProduct.get());
             productRepo.deleteById(productId);
             return true;
         }
@@ -55,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Long productId) {
         Optional<Product> product = productRepo.findById(productId);
-        log.info("Getting product {}", product);
+        log.info("Fetching product {}", product);
         return product.get();
     }
 }
